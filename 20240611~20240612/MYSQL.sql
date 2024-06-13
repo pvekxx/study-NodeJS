@@ -209,3 +209,11 @@ SELECT * FROM board ORDER BY `like` desc;
 SELECT * FROM board ORDER BY view asc;
 
 SELECT * FROM board ORDER BY view desc;
+
+# 재정렬
+SET @COUNT = 0;
+
+UPDATE box SET id = @COUNT := @COUNT + 1;
+
+#초기화
+ALTER TABLE box AUTO_INCREMENT = 0;
