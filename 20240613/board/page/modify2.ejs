@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수정</title>
+</head>
+
+<body>
+    <a href="/">메인 페이지로!</a>
+    <a href="/listlistlist">리스트 페이지로!</a>
+    <a href="/insertinsertinsert">입력 페이지로!</a>
+    <div>수정 페이지임</div>
+    <form action="/modifymodifymodify/<%= data[0].id %>" method="post">
+        <label for="">이름</label>
+        <input type="text" name="inputname" value="<%= data[0].name %>">
+        <label for="">번호</label>
+        <input type="text" name="inputnumber" value="<%= data[0].number %>">
+        <button>수정!</button>
+    </form>
+</body>
+
+</html>
