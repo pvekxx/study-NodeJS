@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인 페이지</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+
+<body>
+    <a href="/post/insert">추가 페이지 이동</a>
+    <div>
+        <ul>
+            <li>번호</li>
+            <li>타이틀</li>
+            <li>내용</li>
+            <li>삭제버튼</li>
+            <li>수정버튼</li>
+        </ul>
+        <% data.forEach((el, index)=>{ %>
+            <ul>
+                <li>
+                    <%= el.id %>
+                </li>
+                <li>
+                    <%= el.title %>
+                </li>
+                <li>
+                    <%= el.content %>
+                </li>
+                <li>삭제버튼</li>
+                <li>수정버튼</li>
+            </ul>
+            <% }) %>
+    </div>
+</body>
+
+</html>
