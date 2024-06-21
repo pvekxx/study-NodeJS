@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div>메인페이지</div>
+    <img src="http://localhost:3000/img/.png" alt="">
+    <input type="text" id="imgs">
+    <input type="file" id="file">
+    <button id="uploadBtn">전송</button>
+
+</body>
+<script>
+    uploadBtn.onclick = () => {
+        // FormData
+        const form = new FormData();
+        // html상에서 name으로 키값을 작성해서 전달 했던 data 객체
+        // <form action="">
+        //     <input type="text" name="img">
+        // </form>
+        form.append("img", imgs.value);
+        // {img : value}
+        // files : input에 담겨있는 file 자체
+        form.append("upload", file.files[0]);
+        // {data : {id : 1}, {pw : 2}}
+        axios.post("http://127.0.0.1:4000/login", { inputuid: 1, inputupw: 2 }).then((e) => {
+            console.log("잘 업로드 됐어");
+            console.log(e.data);
+        })
+    }
+</script>
+
+</html>
