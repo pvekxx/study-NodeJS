@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        body {
+            width: 100%;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            border: 1px solid;
+        }
+
+        #login {
+            width: 300px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #main {
+            display: none;
+        }
+
+        #send {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            border: 1px solid;
+            box-sizing: border-box;
+            display: flex;
+        }
+
+        #send #msgInput {
+            border: 0;
+            box-sizing: border-box;
+            padding: 3px 6px;
+            width: 85%;
+        }
+
+        #send #sendBtn {
+            background-color: yellow;
+            border: none;
+            box-sizing: border-box;
+            padding: 10px;
+            width: 15%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div>귀여운 동물 카톡</div>
+        <div id="login">
+            <h1>로그인</h1>
+            <input type="text" id="username">
+            <button id="loginBtn">접속</button>
+        </div>
+        <div id="main">
+            <select name="" id="roomSelect">
+                <option value="병아리">병아리 방</option>
+                <option value="오리">오리 방</option>
+                <option value="준후">준후 방</option>
+            </select>
+            <ul id="message"></ul>
+            <div id="send">
+                <input type="text" id="msgInput">
+                <button id="sendBtn">보내기</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    let socket = null;
+    let room = "";
+    let name = "";
+    loginBtn.onclick = () => {
+        login.style.display = "none";
+        main.style.display = "block";
+        if (!socket)
+            socket = io.connect();
+
+        room = roomSelect.options[roomSelect.selectedIndex].value // 옵션의 밸류가 담김
+        name = username.value
+        socket.emit("joinRoom", room, name)
+
+        socket.on("joinRoom", (room, name) => { // on은 구독 emit은 보내기
+            const li = document.createElement("li");
+            li.classList.add("join-text")
+            li.innerHTML = `${room}방에 ${name}가 들어왔다.`
+            message.append(li);
+        })
+
+        socket.on("leaveRoom", () => {
+            const li = document.createElement("li");
+            li.classList.add("join-text")
+            li.innerHTML = `${room}방에 ${name}가 나갔어..`
+            message.append(li);
+        })
+
+        socket.on("chat", (name, msg) => {
+            const li = document.createElement("li");
+            li.classList.add("join-text")
+            li.innerHTML = `${name} : ${msg}`
+            message.append(li);
+        })
+    }
+
+
+    roomSelect.onchange = (e) => {
+        console.log(e.target.selectedIndex) // .selectedIndex 들어있는 인덱스값 0,1,2
+        console.log(e.target.options);
+        console.log(e.target.options[e.target.selectedIndex]);
+        console.log(e.target.options[e.target.selectedIndex].value);
+        // room === 이전방 (ex병아리)
+        socket.emit("leaveRoom", room, name)
+        room = e.target.options[e.target.selectedIndex].value;
+        // room === 온체인지가 일어날때 다음방의 내용을 재할당 (ex오리)
+        socket.emit("joinRoom", room, name)
+    }
+
+    sendBtn.onclick = () => {
+        socket.emit("chat", room, name, msgInput.value);
+        msgInput.value = "";
+    }
+</script>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>채팅방</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+    <div>
+        <label for="">사용자 아이디</label>
+        <input type="text" id="uid">
+        <label for="">내용</label>
+        <input type="text" id="content">
+        <button id="submitBtn">전송</button>
+    </div>
+</body>
+<script>
+    // console.log(io);
+    const socket = io.connect(); // 서버측에 웹 소켓 연결 요청을 보냄
+    // 소켓 연결
+    // on 메서드가 이벤트를 구독하겠다.
+    // "whisper" 문자열로 이벤트의 명을 지어주고
+    // 발생한 이벤트 명이 "whisper" 면
+    // 핸들러 함수 호출하겠다.
+    socket.on("whisper", (data) => {
+        alert(`귓속말 받았어 : ${data}`)
+    });
+    submitBtn.onclick = () => {
+        // emit 여기선 클라이언트에서 서버로 요청(send처럼)
+        socket.emit("serverWhisper", { msg: content.value, id: uid.value })
+    }
+</script>
+
+</html>

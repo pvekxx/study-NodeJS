@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>채팅창</div>
+    <div id="chat">
+
+    </div>
+    <div>
+        <label for="">입력창</label>
+        <input type="text" id="chatInput">
+        <button id="chatSubmit">보내기</button>
+    </div>
+</body>
+<script>
+    const socket = new WebSocket("ws://localhost:3000");
+
+    // socket이 message라는 이벤트가 호출됐을때
+    // 서버측에서 send 메서드를 호출하면
+    // socket에 구독하고있던 메시지 이벤트에 전달한 콜백 함수가 실행된다.
+    socket.addEventListener("message", (event) => {
+        console.log(event.data); // 대화내용 브라우저 콘솔
+        chat.innerHTML += `<div>${event.data}</div>` // 받을때 데이터들을 실시간으로 보여줌
+    })
+
+    chatSubmit.onclick = () => { // 클릭시 socket에 인풋밸류값을 send
+        socket.send(chatInput.value);
+    }
+</script>
+
+</html>
