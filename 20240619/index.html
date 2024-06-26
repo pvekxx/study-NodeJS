@@ -15,6 +15,11 @@
     <input type="file" id="file">
     <button id="uploadBtn">전송</button>
 
+    <!-- <form action="">
+        <input type="text" name="img">
+        <input type="file" name="upload">
+    </form> -->
+
 </body>
 <script>
     uploadBtn.onclick = () => {
@@ -29,7 +34,7 @@
         // files : input에 담겨있는 file 자체
         form.append("upload", file.files[0]);
         // {data : {id : 1}, {pw : 2}}
-        axios.post("http://127.0.0.1:4000/login", { inputuid: 1, inputupw: 2 }).then((e) => {
+        axios.post("http://127.0.0.1:4000/upload", form).then((e) => {
             console.log("잘 업로드 됐어");
             console.log(e.data);
         })
