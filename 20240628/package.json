@@ -1,0 +1,18 @@
+{
+  "name": "20240628",
+  "version": "1.0.0",
+  "description": "> object relational mapping 야ㄱ어 > 데터베이스의 데이터를 객체로 매핑 해준다. > 복잡한 sql문은 작성을 해야하지만 간단한 sql 동작을 작성할 필요없이 > 매핑된 객체를 사용해서 데이터를 저장 수정 삭제 조회 할수 있다. > 서비스 로직에 집중 할수있게 도와준다.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "mysql2": "^3.10.1",
+    "sequelize": "^6.37.3"
+  }
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인 페이지</title>
+</head>
+
+<body>
+    <h1>유저 리스트</h1>
+    <form action="/create">
+        <button>가입</button>
+    </form>
+    <ul>
+        <% if(users.length !==0){ %>
+            <% users.forEach((el)=>{ %>
+                <li>
+                    <span>
+                        이름 : <%= el.name %> 나이 : <%= el.age %> 인사말 : <%= el.msg %>
+                    </span>
+                    <form action="/view/<%= el.name %>">
+                        <button>이 유저가 작성한 글 보기</button>
+                    </form>
+                    <form action="/post_create" method="post">
+                        <span>이 유저로 글 작성</span>
+                        <input type="text" name="content">
+                        <input type="text" name="fk_user_name" value="<%= el.name %>" hidden>
+                        <button>글 등록</button>
+                    </form>
+                </li>
+                <% }) %>
+                    <% } %>
+                        <form action="/post_create" method="post">
+                            <label for="">작성할 유저</label>
+                            <input type="text" name="fk_user_name">
+                            <label for="">작성할 글 내용</label>
+                            <input type="text" name="content">
+                            <button>글 등록</button>
+                        </form>
+    </ul>
+</body>
+
+</html>
